@@ -1,6 +1,6 @@
 {
   "name": "@shined/tmp-base",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "This is a universal standard template.",
   "homepage": "https://github.com/sheinsight/tpl-base",
   "packageManager": "pnpm@7.30.1",
