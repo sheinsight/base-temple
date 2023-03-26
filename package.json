@@ -1,0 +1,16 @@
+{
+  "name": "@shined/tmp-base",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "ityuany",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@vitest/coverage-c8": "^0.29.7",
+    "father": "^4.1.7",
+    "vitest": "^0.29.7"
+  }
+}
