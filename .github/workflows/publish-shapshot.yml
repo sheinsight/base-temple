@@ -42,6 +42,6 @@ jobs:
           pnpm version --no-git-tag-version "0.0.0-snapshot.${TAG_NAME}"
 
       - name: Publish snapshot package
-        run: pnpm publish --tag snapshot --access public
+        run: pnpm publish --tag snapshot --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.SHINED_NPM_PUBLISH_TOKEN }}
