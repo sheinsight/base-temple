@@ -39,7 +39,7 @@ jobs:
       - name: Set version to snapshot
         run: |
           TAG_NAME=$(echo ${{ github.ref }} | sed 's/refs\/tags\/snapshot\///')
-          pnpm version --no-git-tag-version "${TAG_NAME}"
+          pnpm version --no-git-tag-version "0.0.0-snapshot.${TAG_NAME}"
 
       - name: Publish snapshot package
         run: pnpm publish --tag snapshot --access public
