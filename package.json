@@ -8,6 +8,10 @@
     "type": "git",
     "url": "git@github.com:sheinsight/tpl-base.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "father build",
     "test": "vitest",
