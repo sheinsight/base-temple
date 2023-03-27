@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git@github.com:sheinsight/tpl-base.git"
   },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
