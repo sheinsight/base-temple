@@ -1,8 +1,11 @@
 name: Publish Latest Version
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+    tags:
+      - v*
 
 jobs:
   publish-release:
@@ -14,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-          ref: ${{ github.event.release.tag_name}}
+          ref: ${{ github.ref }}
 
       - name: Use Pnpm
         uses: pnpm/action-setup@v2
@@ -38,23 +41,19 @@ jobs:
         run: pnpm build
 
       - name: Publich Alpha Package
-        if: contains(github.event.release.tag_name, 'alpha')
+        if: contains(github.ref_name, 'alpha')
         run: pnpm publish --access public --tag alpha --no-git-checks
 
       - name: Publich Beta Package
-        if: contains(github.event.release.tag_name, 'beta')
+        if: contains(github.ref_name, 'beta')
         run: pnpm publish --access public --tag beta --no-git-checks
 
       - name: Publich RC Package
-        if: contains(github.event.release.tag_name, 'rc')
+        if: contains(github.ref_name, 'rc')
         run: pnpm publish --access public --tag rc --no-git-checks
 
-      - name: Publich Release Package
-        if: contains(github.event.release.tag_name, 'latest')
-        run: pnpm publish --access public --tag latest --no-git-checks
-
       - name: Publish Snapshot Package
-        if: contains(github.event.release.tag_name, 'snapshot')
+        if: contains(github.ref_name, 'snapshot')
         run: |
           TAG_NAME=$(echo ${{ github.ref }} | sed 's/refs\/tags\/snapshot\///')
           pnpm version --no-git-tag-version "0.0.0-snapshot.${TAG_NAME}"
