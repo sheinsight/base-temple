@@ -1,0 +1,60 @@
+name: Publish Latest Version
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-release:
+    runs-on: macos-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.SHINED_NPM_PUBLISH_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Use Pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ vars.PNPM_7_VERSION }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/hydrogen
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Testing
+        run: pnpm run test:cov
+
+      - name: Building
+        run: pnpm build
+
+      - name: Publich Release Package
+        if: contains(github.event.release.tag_name, 'latest')
+        run: pnpm publish --access public --tag latest
+
+      - name: Publich Alpha Package
+        if: contains(github.event.release.tag_name, 'alpha')
+        run: pnpm publish --access public --tag alpha
+
+      - name: Publich Beta Package
+        if: contains(github.event.release.tag_name, 'beta')
+        run: pnpm publish --access public --tag beta
+
+      - name: Publich RC Package
+        if: contains(github.event.release.tag_name, 'rc')
+        run: pnpm publish --access public --tag rc
+
+      - name: Publish Snapshot Package
+        if: contains(github.event.release.tag_name, 'snapshot')
+        run: |
+          TAG_NAME=$(echo ${{ github.ref }} | sed 's/refs\/tags\/snapshot\///')
+          pnpm version --no-git-tag-version "0.0.0-snapshot.${TAG_NAME}"
+          pnpm publish --access public --tag snapshot
