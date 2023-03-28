@@ -55,6 +55,6 @@ jobs:
       - name: Publish Snapshot Package
         if: contains(github.ref_name, 'snapshot')
         run: |
-          TAG_NAME=$(echo ${{ github.ref }} | sed 's/refs\/tags\/snapshot\///')
-          pnpm version --no-git-tag-version "0.0.0-snapshot.${TAG_NAME}"
+          TAG_NAME=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//')
+          pnpm version --no-git-tag-version "${TAG_NAME}"
           pnpm publish --access public --tag snapshot --no-git-checks
