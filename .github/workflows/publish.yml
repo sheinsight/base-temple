@@ -36,10 +36,6 @@ jobs:
       - name: Building
         run: pnpm build
 
-      - name: Publich Release Package
-        if: contains(github.event.release.tag_name, 'latest')
-        run: pnpm publish --access public --tag latest
-
       - name: Publich Alpha Package
         if: contains(github.event.release.tag_name, 'alpha')
         run: pnpm publish --access public --tag alpha
@@ -51,6 +47,10 @@ jobs:
       - name: Publich RC Package
         if: contains(github.event.release.tag_name, 'rc')
         run: pnpm publish --access public --tag rc
+
+      - name: Publich Release Package
+        if: contains(github.event.release.tag_name, 'latest')
+        run: pnpm publish --access public --tag latest
 
       - name: Publish Snapshot Package
         if: contains(github.event.release.tag_name, 'snapshot')
