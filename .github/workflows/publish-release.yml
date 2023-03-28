@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  publish-release:
+  release:
     runs-on: macos-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.SHINED_NPM_PUBLISH_TOKEN }}
